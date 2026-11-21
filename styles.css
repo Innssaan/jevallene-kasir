@@ -1,0 +1,511 @@
+/* ==========================================================================
+   Jevallene POS — Dark Neon Design System & Interactive Animations
+   ========================================================================== */
+
+/* ==========================================================================
+   THEME TOKENS (R G B) — DARK NEON & LIGHT SOFT PINK / WHITE
+   ========================================================================== */
+html.dark {
+  color-scheme: dark;
+  --c-on-error: 105 0 5;
+  --c-surface-dim: 27 16 26;
+  --c-outline: 167 137 145;
+  --c-surface-bright: 67 53 64;
+  --c-on-primary-fixed-variant: 141 0 78;
+  --c-secondary-container: 111 0 190;
+  --c-primary-fixed: 255 217 227;
+  --c-surface: 27 16 26;
+  --c-inverse-surface: 242 220 236;
+  --c-inverse-on-surface: 58 44 56;
+  --c-on-primary-container: 88 0 46;
+  --c-on-background: 242 220 236;
+  --c-on-secondary: 73 0 128;
+  --c-on-secondary-container: 214 169 255;
+  --c-on-error-container: 255 218 214;
+  --c-on-tertiary-fixed: 0 34 1;
+  --c-surface-container-highest: 62 49 60;
+  --c-secondary-fixed-dim: 221 183 255;
+  --c-error: 255 180 171;
+  --c-surface-variant: 62 49 60;
+  --c-on-secondary-fixed: 44 0 81;
+  --c-tertiary-fixed: 127 254 111;
+  --c-on-primary-fixed: 62 0 31;
+  --c-surface-container-high: 51 38 49;
+  --c-secondary-fixed: 240 219 255;
+  --c-tertiary-container: 34 167 34;
+  --c-background: 27 16 26;
+  --c-surface-tint: 255 176 202;
+  --c-primary-fixed-dim: 255 176 202;
+  --c-on-secondary-fixed-variant: 105 0 179;
+  --c-on-surface-variant: 224 190 199;
+  --c-primary: 255 176 202;
+  --c-surface-container: 40 28 38;
+  --c-on-primary: 100 0 54;
+  --c-secondary: 221 183 255;
+  --c-tertiary: 99 224 86;
+  --c-error-container: 147 0 10;
+  --c-surface-container-lowest: 21 10 20;
+  --c-tertiary-fixed-dim: 99 224 86;
+  --c-inverse-primary: 184 3 103;
+  --c-outline-variant: 88 64 72;
+  --c-primary-container: 252 75 155;
+  --c-surface-container-low: 36 24 34;
+  --c-on-tertiary-container: 0 50 2;
+  --c-on-tertiary-fixed-variant: 0 83 4;
+  --c-on-surface: 242 220 236;
+  --c-on-tertiary: 0 58 2;
+}
+
+html.light {
+  color-scheme: light;
+  --c-on-error: 255 255 255;
+  --c-surface-dim: 255 245 248;
+  --c-outline: 163 122 138;
+  --c-surface-bright: 255 255 255;
+  --c-on-primary-fixed-variant: 141 0 78;
+  --c-secondary-container: 236 220 251;
+  --c-primary-fixed: 255 217 227;
+  --c-surface: 255 247 250;
+  --c-inverse-surface: 61 31 44;
+  --c-inverse-on-surface: 255 240 245;
+  --c-on-primary-container: 107 18 56;
+  --c-on-background: 61 31 44;
+  --c-on-secondary: 255 255 255;
+  --c-on-secondary-container: 90 42 128;
+  --c-on-error-container: 122 15 29;
+  --c-on-tertiary-fixed: 0 34 1;
+  --c-surface-container-highest: 252 214 228;
+  --c-secondary-fixed-dim: 221 183 255;
+  --c-error: 211 47 68;
+  --c-surface-variant: 252 228 236;
+  --c-on-secondary-fixed: 44 0 81;
+  --c-tertiary-fixed: 127 254 111;
+  --c-on-primary-fixed: 62 0 31;
+  --c-surface-container-high: 255 224 235;
+  --c-secondary-fixed: 240 219 255;
+  --c-tertiary-container: 201 242 210;
+  --c-background: 255 247 250;
+  --c-surface-tint: 244 143 184;
+  --c-primary-fixed-dim: 255 176 202;
+  --c-on-secondary-fixed-variant: 105 0 179;
+  --c-on-surface-variant: 122 79 96;
+  --c-primary: 214 72 127;
+  --c-surface-container: 255 233 241;
+  --c-on-primary: 255 255 255;
+  --c-secondary: 142 84 186;
+  --c-tertiary: 34 139 64;
+  --c-error-container: 255 218 223;
+  --c-surface-container-lowest: 255 255 255;
+  --c-tertiary-fixed-dim: 34 139 64;
+  --c-inverse-primary: 232 106 154;
+  --c-outline-variant: 242 196 214;
+  --c-primary-container: 244 143 184;
+  --c-surface-container-low: 255 243 247;
+  --c-on-tertiary-container: 15 81 36;
+  --c-on-tertiary-fixed-variant: 0 83 4;
+  --c-on-surface: 61 31 44;
+  --c-on-tertiary: 255 255 255;
+}
+
+/* Smooth color crossfade only while switching theme */
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+@layer base {
+  html, body {
+    margin: 0;
+    padding: 0;
+    background-color: rgb(var(--c-surface-container-lowest));
+    color: rgb(var(--c-on-surface));
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Tabular numerals for all currency and metrics to prevent layout shift */
+  .tabular-nums,
+  .font-currency-display,
+  .font-currency-tile,
+  .font-mono {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1, "cv05" 1;
+  }
+}
+
+/* Custom sleek dark scrollbar */
+.custom-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scroll::-webkit-scrollbar-track {
+  background: rgba(21, 10, 20, 0.4);
+}
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: rgba(167, 137, 145, 0.25);
+  border-radius: 9999px;
+}
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(252, 75, 155, 0.55);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ==========================================================================
+   CLEAR DISTINCTION BETWEEN PLAIN TEXT & INTERACTIVE BUTTONS / LINKS
+   ========================================================================== */
+
+/* 1. Primary Neon Call-To-Action Buttons */
+.btn-primary-neon {
+  cursor: pointer;
+  position: relative;
+  border: 1px solid rgba(255, 176, 202, 0.35);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.28),
+    0 0 20px -2px rgba(252, 75, 155, 0.45);
+  transition:
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.2s ease;
+}
+.btn-primary-neon:hover {
+  transform: translateY(-2px) scale(1.015);
+  filter: brightness(1.08);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.45),
+    0 6px 28px 0px rgba(252, 75, 155, 0.72);
+}
+.btn-primary-neon:active {
+  transform: translateY(0px) scale(0.97);
+}
+
+/* 2. Secondary Elevated Surface Buttons */
+.btn-secondary-neon {
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.07);
+  transition:
+    transform 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    color 0.18s ease;
+}
+.btn-secondary-neon:hover {
+  transform: translateY(-1.5px);
+  background-color: #3e313c;
+  border-color: rgba(252, 75, 155, 0.48);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.16),
+    0 4px 18px -2px rgba(252, 75, 155, 0.28);
+}
+.btn-secondary-neon:active {
+  transform: translateY(0px) scale(0.97);
+}
+
+/* 3. Neon Outlined Pill Button */
+.btn-neon-outline {
+  cursor: pointer;
+  transition:
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.btn-neon-outline:hover {
+  transform: translateY(-1.5px) scale(1.02);
+}
+.btn-neon-outline:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* 4. General Interactive Elements (Cards, Steppers, Filter Pills) */
+.btn-interactive {
+  cursor: pointer;
+  transition:
+    transform 0.16s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.16s ease,
+    border-color 0.16s ease,
+    box-shadow 0.16s ease,
+    color 0.16s ease;
+}
+.btn-interactive:hover {
+  transform: translateY(-1px);
+  border-color: rgba(252, 75, 155, 0.42);
+  box-shadow: 0 4px 14px -2px rgba(252, 75, 155, 0.22);
+}
+.btn-interactive:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* 5. Inline Text Action Links (Clearly differentiated from static text) */
+.btn-link-neon {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 0.5rem;
+  border: 1px solid transparent;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease,
+    color 0.18s ease;
+}
+.btn-link-neon:hover {
+  background-color: rgba(252, 75, 155, 0.14);
+  border-color: rgba(252, 75, 155, 0.35);
+  color: #ffb0ca;
+  transform: translateX(2px);
+}
+
+/* 6. Sidebar Navigation Items */
+.nav-item {
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #e0bec7;
+  border: 1px solid transparent;
+  transition:
+    transform 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+.nav-item:hover:not(.active-nav) {
+  background-color: #281c26;
+  color: #f2dcec;
+  border-color: rgba(252, 75, 155, 0.28);
+  transform: translateX(3px);
+}
+.nav-item.active-nav {
+  background-color: #fc4b9b;
+  color: #58002e;
+  font-weight: 700;
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 18px -2px rgba(233, 59, 140, 0.55);
+}
+
+/* Header Quick Switcher Tabs */
+.header-tab {
+  cursor: pointer;
+  color: #e0bec7;
+}
+.header-tab:hover:not(.active-tab) {
+  color: #f2dcec;
+  background-color: rgba(255, 255, 255, 0.06);
+}
+.header-tab.active-tab {
+  background-color: #fc4b9b;
+  color: #58002e;
+  font-weight: 700;
+  box-shadow: 0 0 12px rgba(252, 75, 155, 0.45);
+}
+
+/* Category Pills in POS */
+.pos-cat-btn {
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.pos-cat-btn:hover:not(.active-cat) {
+  transform: translateY(-1px);
+  border-color: rgba(252, 75, 155, 0.45);
+  color: #f2dcec;
+}
+
+/* ==========================================================================
+   LIGHT MODE (SOFT PINK & WHITE) — OVERRIDES FOR HARDCODED DARK VALUES
+   ========================================================================== */
+html.light .custom-scroll::-webkit-scrollbar-track { background: rgba(255, 233, 241, 0.6); }
+html.light .custom-scroll::-webkit-scrollbar-thumb { background: rgba(214, 72, 127, 0.25); }
+
+html.light .btn-primary-neon {
+  border-color: rgba(214, 72, 127, 0.25);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.6), 0 6px 18px -6px rgba(214, 72, 127, 0.45);
+}
+html.light .btn-primary-neon:hover {
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.7), 0 8px 24px -6px rgba(214, 72, 127, 0.55);
+}
+html.light .btn-secondary-neon {
+  border-color: rgba(214, 72, 127, 0.16);
+  box-shadow: 0 1px 2px rgba(214, 72, 127, 0.08);
+}
+html.light .btn-secondary-neon:hover {
+  background-color: #ffe0eb;
+  border-color: rgba(214, 72, 127, 0.4);
+  box-shadow: 0 4px 14px -4px rgba(214, 72, 127, 0.3);
+}
+html.light .btn-link-neon:hover { color: #d6487f; background-color: rgba(244, 143, 184, 0.18); }
+
+html.light .nav-item { color: #7a4f60; }
+html.light .nav-item:hover:not(.active-nav) { background-color: #ffe9f1; color: #3d1f2c; border-color: rgba(214, 72, 127, 0.22); }
+html.light .nav-item.active-nav {
+  background-color: #f48fb8;
+  color: #6b1238;
+  border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 6px 18px -6px rgba(214, 72, 127, 0.55);
+}
+
+html.light .header-tab { color: #7a4f60; }
+html.light .header-tab:hover:not(.active-tab) { color: #3d1f2c; background-color: rgba(214, 72, 127, 0.08); }
+html.light .header-tab.active-tab { background-color: #f48fb8; color: #6b1238; box-shadow: 0 4px 12px -4px rgba(214, 72, 127, 0.5); }
+
+html.light .pos-cat-btn:hover:not(.active-cat) { color: #3d1f2c; }
+
+html.light #app-sidebar { box-shadow: 4px 0 24px rgba(214, 72, 127, 0.08); }
+
+/* Thermal receipt preview becomes white paper in light mode */
+html.light .bg-\[\#0f070e\] { background-color: #ffffff !important; }
+html.light .bg-\[\#0f070e\] .text-neutral-100,
+html.light .bg-\[\#0f070e\] .text-neutral-200 { color: #3d1f2c !important; }
+html.light .bg-\[\#0f070e\] .text-neutral-300,
+html.light .bg-\[\#0f070e\] .text-neutral-400 { color: #7a4f60 !important; }
+html.light .bg-\[\#0f070e\] .bg-neutral-900 { background-color: #fff0f5 !important; }
+html.light .bg-\[\#0f070e\] .border-neutral-700,
+html.light .bg-\[\#0f070e\] .border-neutral-800 { border-color: #f2c4d6 !important; }
+
+/* ==========================================================================
+   CHART & GRAPHIC ANIMATIONS
+   ========================================================================== */
+
+/* Bar Chart Grow Up Animation */
+@keyframes barGrowUp {
+  0% {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+.chart-bar {
+  transform-box: fill-box;
+  transform-origin: bottom;
+  animation: barGrowUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: var(--bar-delay, 0s);
+  cursor: pointer;
+  transition:
+    filter 0.2s ease,
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.2s ease;
+}
+
+.chart-bar:hover {
+  filter: brightness(1.3) drop-shadow(0 0 12px rgba(252, 75, 155, 0.75));
+  transform: scaleY(1.04);
+}
+
+.peak-bar-primary {
+  filter: drop-shadow(0 0 10px rgba(252, 75, 155, 0.55));
+}
+.peak-bar-secondary {
+  filter: drop-shadow(0 0 10px rgba(221, 183, 255, 0.5));
+}
+
+/* Trend Line Stroke Draw Animation */
+@keyframes drawTrendLine {
+  0% {
+    stroke-dashoffset: 1000;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fadeInArea {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.chart-line-anim {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawTrendLine 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+}
+
+.chart-area-anim {
+  opacity: 0;
+  animation: fadeInArea 1s ease 0.45s forwards;
+}
+
+/* Pulsing Chart Peak Dot */
+@keyframes pulseGlow {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 4px rgba(252, 75, 155, 0.7));
+  }
+  50% {
+    transform: scale(1.25);
+    filter: drop-shadow(0 0 10px rgba(252, 75, 155, 1));
+  }
+}
+
+.pulse-dot {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pulseGlow 2.4s infinite ease-in-out;
+}
+
+/* Donut Chart Segments */
+@keyframes donutSweep {
+  0% {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.donut-segment {
+  transform-origin: 50% 50%;
+  animation: donutSweep 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  transition: stroke-width 0.2s ease, filter 0.2s ease;
+}
+.donut-segment:hover {
+  stroke-width: 14.5;
+  filter: brightness(1.15) drop-shadow(0 0 10px rgba(252, 75, 155, 0.6));
+}
+
+/* View Transition Animation */
+@keyframes viewFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.view-section.active-view {
+  animation: viewFadeIn 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* KPI Card subtle lift on hover */
+.kpi-card {
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+.kpi-card:hover {
+  transform: translateY(-3px);
+}

@@ -2153,9 +2153,37 @@ function toggleTheme() {
   showToast(next === 'light' ? 'Light Mode (Soft Pink & White) aktif' : 'Dark Neon Mode aktif');
 }
 
+function runSplashScreen() {
+  const splash = document.getElementById('splash-screen');
+  const bar = document.getElementById('splash-progress-bar');
+  const pct = document.getElementById('splash-pct-text');
+  const status = document.getElementById('splash-status-text');
+  if (!splash) return;
+
+  const steps = [
+    { p: 35, text: 'Menyiapkan katalog & SKU...', delay: 220 },
+    { p: 72, text: 'Sinkronisasi modul kasir...', delay: 520 },
+    { p: 100, text: 'Siap digunakan!', delay: 880 }
+  ];
+
+  steps.forEach((s) => {
+    setTimeout(() => {
+      if (bar) bar.style.width = `${s.p}%`;
+      if (pct) pct.textContent = `${s.p}%`;
+      if (status) status.textContent = s.text;
+    }, s.delay);
+  });
+
+  setTimeout(() => {
+    splash.classList.add('opacity-0', 'pointer-events-none');
+    setTimeout(() => splash.classList.add('hidden'), 500);
+  }, 1250);
+}
+
 // Initialize on DOM load
 document.addEventListener('DOMContentLoaded', async () => {
   applyTheme(localStorage.getItem('jevallene_theme') || 'dark');
+  runSplashScreen();
   initAuthGate();
   loadPersistedState();
   initChartTooltips();

@@ -2046,7 +2046,59 @@ function closeOAuthModal() {
   if (modal) modal.classList.add('hidden');
 }
 
+const STORAGE_KEY_OAUTH_SESSION = 'jevallene_oauth_session_v1';
+
+function showLandingLoginPage() {
+  const landing = document.getElementById('auth-landing-page');
+  if (landing) landing.classList.remove('hidden');
+}
+
+function hideLandingLoginPage() {
+  const landing = document.getElementById('auth-landing-page');
+  if (landing) landing.classList.add('hidden');
+}
+
+function initAuthGate() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY_OAUTH_SESSION);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (parsed && parsed.email) {
+        currentAuthUser = parsed;
+        renderAuthUserUI();
+        hideLandingLoginPage();
+        return;
+      }
+    }
+  } catch (err) {
+    console.warn('Failed to parse OAuth session:', err);
+  }
+  showLandingLoginPage();
+}
+
+function logoutOAuth() {
+  localStorage.removeItem(STORAGE_KEY_OAUTH_SESSION);
+  closeOAuthModal();
+  showLandingLoginPage();
+  showToast('Anda telah keluar. Silakan login kembali lewat OAuth.');
+}
+
 async function loginWithOAuth(provider, name, email, role) {
+  const parts = name.split(' ').filter(Boolean).map((p) => p[0].toUpperCase()).slice(0, 2);
+  const userObj = {
+    name,
+    email,
+    role,
+    provider,
+    initials: parts.join('') || 'SR',
+    branch: 'Toko Berkah Utama (JVL-8821)'
+  };
+  localStorage.setItem(STORAGE_KEY_OAUTH_SESSION, JSON.stringify(userObj));
+  currentAuthUser = userObj;
+  renderAuthUserUI();
+  hideLandingLoginPage();
+  closeOAuthModal();
+
   try {
     const res = await fetch('/api/auth/oauth', {
       method: 'POST',
@@ -2056,24 +2108,11 @@ async function loginWithOAuth(provider, name, email, role) {
     if (res.ok) {
       const result = await res.json();
       applyBackendState(result.state);
-      closeOAuthModal();
-      showToast(`Login OAuth 2.0 (${provider}) berhasil! Selamat bertugas, ${name}.`);
-      return;
     }
   } catch (err) {
     console.warn('POST /api/auth/oauth fallback:', err);
   }
 
-  const parts = name.split(' ').filter(Boolean).map((p) => p[0].toUpperCase()).slice(0, 2);
-  currentAuthUser = {
-    name,
-    email,
-    role,
-    provider,
-    initials: parts.join('') || 'SR'
-  };
-  renderAuthUserUI();
-  closeOAuthModal();
   showToast(`Login OAuth 2.0 (${provider}) berhasil! Selamat bertugas, ${name}.`);
 }
 
@@ -2081,6 +2120,13 @@ function submitCustomOAuth(e) {
   e.preventDefault();
   const name = document.getElementById('customOAuthName')?.value || 'Kasir POS';
   const email = document.getElementById('customOAuthEmail')?.value || 'kasir@jevallene.cloud';
+  loginWithOAuth('Custom OIDC / OAuth 2.0', name, email, 'Store Supervisor');
+}
+
+function submitLandingCustomOAuth(e) {
+  e.preventDefault();
+  const name = document.getElementById('landingOAuthName')?.value || 'Kasir POS';
+  const email = document.getElementById('landingOAuthEmail')?.value || 'kasir@jevallene.cloud';
   loginWithOAuth('Custom OIDC / OAuth 2.0', name, email, 'Store Supervisor');
 }
 
@@ -2110,6 +2156,7 @@ function toggleTheme() {
 // Initialize on DOM load
 document.addEventListener('DOMContentLoaded', async () => {
   applyTheme(localStorage.getItem('jevallene_theme') || 'dark');
+  initAuthGate();
   loadPersistedState();
   initChartTooltips();
   renderPosCatalog();

@@ -737,6 +737,7 @@ async function processCheckout() {
   }
 
   const customer = activeOrderNumber === 2 ? 'Meja 02 (Dine-in)' : 'Walk-in (Kasir POS)';
+  const activeCashier = currentAuthUser?.name || 'Siti Rahma';
   try {
     const res = await fetch('/api/checkout', {
       method: 'POST',
@@ -745,7 +746,7 @@ async function processCheckout() {
         cart,
         paymentMethod: selectedPaymentMethod,
         customer,
-        cashier: 'Siti Rahma'
+        cashier: activeCashier
       })
     });
     if (res.ok) {
@@ -806,7 +807,7 @@ async function processCheckout() {
     itemCount: `${totalQty} item${totalQty > 1 ? 's' : ''}`,
     method: selectedPaymentMethod,
     methodGroup: methodGroup,
-    cashier: 'Siti Rahma',
+    cashier: activeCashier,
     total: grandTotal,
     status: 'Selesai',
     items: trxItems
@@ -1516,11 +1517,12 @@ async function addCashDrawerEntry(e) {
   const note = document.getElementById('cashEntryNote').value;
   if (amount <= 0) return;
 
+  const activeUser = currentAuthUser?.name || 'Siti Rahma';
   try {
     const res = await fetch('/api/cash-drawer', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ type, amount, note, user: 'Siti Rahma' })
+      body: JSON.stringify({ type, amount, note, user: activeUser })
     });
     if (res.ok) {
       const result = await res.json();
@@ -1539,7 +1541,7 @@ async function addCashDrawerEntry(e) {
     type,
     label: type === 'out' ? 'Kas Keluar (Petty)' : 'Kas Masuk Laci',
     note,
-    user: 'Siti Rahma',
+    user: activeUser,
     amount
   });
   renderCashDrawerTable();
@@ -2015,6 +2017,16 @@ function renderAuthUserUI() {
   if (hName) hName.textContent = u.name;
   if (hRole) hRole.textContent = `${u.role} • ${shortProvider} SSO`;
   if (hAvatar) hAvatar.textContent = u.initials || 'SR';
+
+  // Sync Dashboard Welcome Greeting, POS Cashier, and Cash Drawer Operator
+  const welcomeName = document.getElementById('dashboard-welcome-name');
+  const welcomeRole = document.getElementById('dashboard-welcome-role');
+  const posCashier = document.getElementById('pos-active-cashier');
+  const cashShiftTitle = document.getElementById('cash-drawer-shift-title');
+  if (welcomeName) welcomeName.textContent = `${u.name}!`;
+  if (welcomeRole) welcomeRole.textContent = `${u.role} • Cabang Utama`;
+  if (posCashier) posCashier.textContent = u.name;
+  if (cashShiftTitle) cashShiftTitle.textContent = `Jurnal Mutasi Kas Laci (Shift 1 - ${u.name})`;
 
   const cName = document.getElementById('oauth-card-name');
   const cEmail = document.getElementById('oauth-card-email');

@@ -357,6 +357,11 @@
             <span class="material-symbols-outlined text-[20px]">settings</span>
             <span>Pengaturan</span>
           </button>
+
+          <button type="button" onclick="switchView('about')" data-nav="about" class="nav-item w-full flex items-center gap-space-sm px-space-sm py-2 rounded-xl transition-all text-left">
+            <span class="material-symbols-outlined text-[20px]">info</span>
+            <span>About</span>
+          </button>
         </nav>
       </div>
     </div>
@@ -2958,6 +2963,134 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ===================================================== -->
+    <!-- VIEW 13: ABOUT — JEVALLENE KASIR                      -->
+    <!-- ===================================================== -->
+    <main id="view-about" class="view-section hidden flex-1 pt-16 w-full">
+      <div class="flex flex-col w-full max-w-[1600px] mx-auto">
+        <div class="p-space-md lg:p-space-lg flex flex-col gap-space-lg">
+          <!-- About Header -->
+          <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-space-md">
+            <div class="flex items-center gap-4">
+              <div class="logo-animated w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-container to-secondary-container flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-white text-[26px]">point_of_sale</span>
+              </div>
+              <div>
+                <span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">Tentang Aplikasi</span>
+                <h1 class="text-neon-shimmer font-headline-xl text-headline-xl font-extrabold tracking-tight">Jevallene Kasir</h1>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5-Column Studio/Directory Section (Adapted to Jevallene Kasir, No Back-to-Top & No Rocket) -->
+          <section class="rounded-2xl bg-surface-container-lowest border border-outline-variant/25 p-6 lg:p-10 shadow-xl space-y-8">
+            <!-- Top Tagline -->
+            <p class="font-body-sm text-body-sm text-outline pb-6 border-b border-outline-variant/20">
+              <strong class="text-on-surface">Jevallene Kasir</strong> — Sistem Kasir Pintar &amp; Manajemen UMKM Cloud oleh <span class="text-primary font-semibold">Innssaan</span>. Mendukung transaksi POS, scan barcode/SKU, sinkronisasi Excel, dan laporan keuangan real-time.
+            </p>
+
+            <!-- 5-Column Directory Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8">
+              <!-- Col 1: Navigasi -->
+              <div class="space-y-3">
+                <h3 class="font-label-lg text-label-lg text-on-surface font-bold">Navigasi</h3>
+                <ul class="space-y-2 font-body-sm text-body-sm text-outline">
+                  <li><button type="button" onclick="switchView('dashboard')" class="btn-link-neon !p-0 text-outline hover:text-primary">Dashboard</button></li>
+                  <li><button type="button" onclick="switchView('kasir')" class="btn-link-neon !p-0 text-outline hover:text-primary">Kasir (POS)</button></li>
+                  <li><button type="button" onclick="switchView('transaksi')" class="btn-link-neon !p-0 text-outline hover:text-primary">Riwayat Transaksi</button></li>
+                  <li><button type="button" onclick="switchView('produk')" class="btn-link-neon !p-0 text-outline hover:text-primary">Produk &amp; Katalog</button></li>
+                  <li><button type="button" onclick="switchView('inventori')" class="btn-link-neon !p-0 text-outline hover:text-primary">Inventori Gudang</button></li>
+                </ul>
+              </div>
+
+              <!-- Col 2: Fokus & Keahlian Sistem -->
+              <div class="space-y-3">
+                <h3 class="font-label-lg text-label-lg text-on-surface font-bold">Fokus &amp; Fitur</h3>
+                <ul class="space-y-2 font-body-sm text-body-sm text-outline">
+                  <li>POS Kasir Cepat</li>
+                  <li>Scan Barcode &amp; SKU</li>
+                  <li>Kalkulator HPP &amp; Margin</li>
+                  <li>Sinkronisasi Excel (.xlsx)</li>
+                  <li>Struk Thermal 80mm</li>
+                </ul>
+              </div>
+
+              <!-- Col 3: Modul Operasional -->
+              <div class="space-y-3">
+                <h3 class="font-label-lg text-label-lg text-on-surface font-bold">Operasional</h3>
+                <ul class="space-y-2 font-body-sm text-body-sm text-outline">
+                  <li><button type="button" onclick="switchView('pembelian')" class="btn-link-neon !p-0 text-outline hover:text-primary">Pembelian &amp; PO</button></li>
+                  <li><button type="button" onclick="switchView('kasharian')" class="btn-link-neon !p-0 text-outline hover:text-primary">Kas Harian &amp; Shift</button></li>
+                  <li><button type="button" onclick="switchView('keuangan')" class="btn-link-neon !p-0 text-outline hover:text-primary">Keuangan &amp; Arus Kas</button></li>
+                  <li><button type="button" onclick="switchView('laporan')" class="btn-link-neon !p-0 text-outline hover:text-primary">Laporan Laba Rugi</button></li>
+                  <li><button type="button" onclick="switchView('karyawan')" class="btn-link-neon !p-0 text-outline hover:text-primary">Manajemen Karyawan</button></li>
+                </ul>
+              </div>
+
+              <!-- Col 4: Terhubung -->
+              <div class="space-y-3">
+                <h3 class="font-label-lg text-label-lg text-on-surface font-bold">Terhubung</h3>
+                <ul class="space-y-2 font-body-sm text-body-sm text-outline">
+                  <li><a href="https://github.com/Innssaan/jevallene-kasir" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">GitHub</a></li>
+                  <li><a href="https://jevallene-kasir.vercel.app" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">Live Vercel App</a></li>
+                  <li><button type="button" onclick="openOAuthModal()" class="btn-link-neon !p-0 text-outline hover:text-primary">Login OAuth 2.0</button></li>
+                  <li><button type="button" onclick="switchView('notifikasi')" class="btn-link-neon !p-0 text-outline hover:text-primary">Pusat Notifikasi</button></li>
+                  <li><button type="button" onclick="switchView('pengaturan')" class="btn-link-neon !p-0 text-outline hover:text-primary">Pengaturan Sistem</button></li>
+                </ul>
+              </div>
+
+              <!-- Col 5: Lokasi & Status -->
+              <div class="space-y-3">
+                <h3 class="font-label-lg text-label-lg text-on-surface font-bold">Lokasi &amp; Status</h3>
+                <ul class="space-y-2 font-body-sm text-body-sm text-outline">
+                  <li>Bandung, Indonesia</li>
+                  <li class="text-tertiary font-semibold">Online • Cloud Sync Aktif</li>
+                  <li>Jevallene UMKM v4.2</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Middle Contact / Collaboration Line -->
+            <div class="py-5 border-y border-outline-variant/20 font-body-sm text-body-sm text-outline">
+              Tertarik menggunakan <strong class="text-on-surface">Jevallene Kasir</strong> untuk outlet atau kustomisasi fitur UMKM? Kunjungi repositori
+              <a href="https://github.com/Innssaan/jevallene-kasir" target="_blank" rel="noopener noreferrer" class="text-primary font-semibold hover:underline">GitHub Innssaan</a>
+              atau atur perangkat kasir melalui
+              <button type="button" onclick="switchView('pengaturan')" class="btn-link-neon !p-0 text-primary font-semibold">menu Pengaturan</button>.
+            </div>
+
+            <!-- Bottom Copyright & Quick Links Row (Without Back-to-Top and Without Rocket Button) -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 font-label-sm text-label-sm text-outline">
+              <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+                <span>&copy; 2026 <strong class="text-on-surface">Jevalline by Innssaan</strong>. Seluruh hak cipta dilindungi.</span>
+                <div class="flex items-center gap-3">
+                  <button type="button" onclick="switchView('dashboard')" class="btn-link-neon !p-0 text-outline hover:text-on-surface">Dashboard</button>
+                  <span class="opacity-40">|</span>
+                  <button type="button" onclick="switchView('kasir')" class="btn-link-neon !p-0 text-outline hover:text-on-surface">Kasir</button>
+                  <span class="opacity-40">|</span>
+                  <button type="button" onclick="switchView('produk')" class="btn-link-neon !p-0 text-outline hover:text-on-surface">Produk</button>
+                  <span class="opacity-40">|</span>
+                  <button type="button" onclick="switchView('laporan')" class="btn-link-neon !p-0 text-outline hover:text-on-surface">Laporan</button>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <a href="https://github.com/Innssaan/jevallene-kasir" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-on-surface hover:text-primary transition-colors" title="GitHub">
+                  <span class="material-symbols-outlined text-[18px]">code</span>
+                </a>
+                <button type="button" onclick="toggleTheme()" class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-on-surface hover:text-primary transition-colors" title="Ganti Tema">
+                  <span class="material-symbols-outlined text-[18px]">contrast</span>
+                </button>
+                <button type="button" onclick="openOAuthModal()" class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-on-surface hover:text-primary transition-colors" title="Akun OAuth">
+                  <span class="material-symbols-outlined text-[18px]">passkey</span>
+                </button>
+                <span class="text-outline pl-1">Bandung, Indonesia</span>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     </main>

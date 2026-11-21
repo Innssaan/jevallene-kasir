@@ -337,7 +337,8 @@ function switchView(viewName) {
     'laporan',
     'karyawan',
     'notifikasi',
-    'pengaturan'
+    'pengaturan',
+    'about'
   ];
   views.forEach((v) => {
     const el = document.getElementById(`view-${v}`);
